@@ -1,7 +1,5 @@
 github.com/ci4rail/io4edge-client-go v1.2.2-0.20220729113357-c9cdc3f86fa8 h1:JVSCDgmXdBQO0U4AscRpBdNV4krJlr6o/bnSpci/2uY=
 github.com/ci4rail/io4edge-client-go v1.2.2-0.20220729113357-c9cdc3f86fa8/go.mod h1:jfztjRZiYIcUvluPa7lDh+Oy148W5htXmpUGU2gUGS8=
-github.com/ci4rail/socketcan-io4edge v0.0.0-20220730193035-0c98487852eb h1:HLMM7oqJMnby2lcP09f6V41K6p8/Drpg9P4EtUZ9wgg=
-github.com/ci4rail/socketcan-io4edge v0.0.0-20220730193035-0c98487852eb/go.mod h1:Ta04ewXNPm0xQDj/msPVTGxhTvz3McpMTXEKs6ONlfk=
 github.com/ci4rail/socketcan-io4edge v0.0.0-20220730200204-8ffedfb3b936 h1:E3Jk4eGEhck09ejGQWfmMMqQT6ch6e5a1tS5ao1Bw1A=
 github.com/ci4rail/socketcan-io4edge v0.0.0-20220730200204-8ffedfb3b936/go.mod h1:Ta04ewXNPm0xQDj/msPVTGxhTvz3McpMTXEKs6ONlfk=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
