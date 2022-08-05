@@ -64,7 +64,7 @@ func serviceAdded(s client.ServiceInfo) error {
 		info.ipPort = ipPort
 		minor, err := getMinor()
 		if err != nil {
-			logErr("%s´: error getting minor: %v\n", name, err)
+			logErr("%s: error getting minor: %v\n", name, err)
 			return nil
 		}
 		info.minor = minor
@@ -88,7 +88,7 @@ func serviceRemoved(s client.ServiceInfo) error {
 
 	info, ok := daemonMap[name]
 	if ok {
-		fmt.Printf("Stopping instance for %s\n", name)
+		fmt.Printf("%s: Stopping process\n", name)
 		info.runner.Stop()
 		delInfo(name)
 	} else {
