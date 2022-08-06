@@ -26,6 +26,7 @@ import (
 
 	"github.com/ci4rail/io4edge-client-go/client"
 	"github.com/ci4rail/socketcan-io4edge/pkg/drunner"
+	"github.com/ci4rail/ttynvt-runner/internal/version"
 )
 
 type daemonInfo struct {
@@ -105,11 +106,15 @@ func main() {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
-
+	showVersion := flag.Bool("version", false, "show version and exit")
 	majorPrt := flag.Int("m", 199, "major number for ttynvt")
 	logLevel := flag.String("loglevel", "info", "loglevel (debug, info, warn, error)")
 	// parse command line arguments
 	flag.Parse()
+	if *showVersion {
+		fmt.Printf("%s\n", version.Version)
+		os.Exit(0)
+	}
 	if flag.NArg() != 1 {
 		flag.Usage()
 	}

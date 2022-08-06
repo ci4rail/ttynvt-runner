@@ -3,8 +3,8 @@ module github.com/ci4rail/ttynvt-runner
 go 1.18
 
 require (
-	github.com/ci4rail/io4edge-client-go v1.2.2-0.20220729113357-c9cdc3f86fa8
-	github.com/ci4rail/socketcan-io4edge v0.0.0-20220730200204-8ffedfb3b936
+	github.com/ci4rail/io4edge-client-go v1.3.0
+	github.com/ci4rail/socketcan-io4edge v0.1.0
 	github.com/sirupsen/logrus v1.8.1
 )
 
