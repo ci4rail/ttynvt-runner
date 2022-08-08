@@ -26,6 +26,7 @@ import (
 
 	"github.com/ci4rail/io4edge-client-go/client"
 	"github.com/ci4rail/socketcan-io4edge/pkg/drunner"
+	"github.com/ci4rail/ttynvt-runner/internal/version"
 )
 
 type daemonInfo struct {
@@ -43,7 +44,7 @@ var (
 func serviceAdded(s client.ServiceInfo) error {
 	var info *daemonInfo
 
-	fmt.Println("Added service", s.GetInstanceName())
+	fmt.Printf("%s: service added info received from mdns\n", s.GetInstanceName())
 
 	name := ttyName(s.GetInstanceName())
 	ipPort := s.GetIPAddressPort()
@@ -52,11 +53,11 @@ func serviceAdded(s client.ServiceInfo) error {
 	if ok {
 		// instance already exists, check if ip or port changed
 		if info.ipPort == ipPort {
-			fmt.Printf("no change in ip/port for instance %s\n", name)
+			fmt.Printf("%s: no change in ip/port (nothing to do)\n", name)
 			return nil
 		}
 		// ip or port changed, kill old instance and start new one
-		fmt.Printf("ip/port changed for instance %s, %s->%s stop old instance\n", name, info.ipPort, ipPort)
+		fmt.Printf("%s: ip/port changed, %s->%s stop old instance\n", name, info.ipPort, ipPort)
 		info.runner.Stop()
 	} else {
 		// instance does not exist. start new instance
@@ -64,7 +65,7 @@ func serviceAdded(s client.ServiceInfo) error {
 		info.ipPort = ipPort
 		minor, err := getMinor()
 		if err != nil {
-			logErr("error: %v\n", err)
+			logErr("%s: error getting minor: %v\n", name, err)
 			return nil
 		}
 		info.minor = minor
@@ -74,7 +75,7 @@ func serviceAdded(s client.ServiceInfo) error {
 	runner, err := drunner.New(name, programPath, "-f", "-E", "-M", strconv.Itoa(major), "-m", strconv.Itoa(info.minor), "-n", name, "-S", ipPort)
 
 	if err != nil {
-		logErr("Start %s (%s) failed: %v\n", programPath, name, err)
+		logErr("%s: Start %s failed: %v\n", name, programPath, err)
 		delInfo(name)
 	}
 	info.runner = runner
@@ -84,15 +85,15 @@ func serviceAdded(s client.ServiceInfo) error {
 
 func serviceRemoved(s client.ServiceInfo) error {
 	name := ttyName(s.GetInstanceName())
-	fmt.Println("Removed service", s.GetInstanceName())
+	fmt.Printf("%s: service removed info received from mdns\n", s.GetInstanceName())
 
 	info, ok := daemonMap[name]
 	if ok {
-		fmt.Printf("Stopping instance for %s\n", name)
+		fmt.Printf("%s: Stopping process\n", name)
 		info.runner.Stop()
 		delInfo(name)
 	} else {
-		fmt.Printf("instance for %s not in map\n", name)
+		fmt.Printf("%s: instance not known! (ignoring)\n", name)
 	}
 	return nil
 }
@@ -105,11 +106,15 @@ func main() {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
-
+	showVersion := flag.Bool("version", false, "show version and exit")
 	majorPrt := flag.Int("m", 199, "major number for ttynvt")
 	logLevel := flag.String("loglevel", "info", "loglevel (debug, info, warn, error)")
 	// parse command line arguments
 	flag.Parse()
+	if *showVersion {
+		fmt.Printf("%s\n", version.Version)
+		os.Exit(0)
+	}
 	if flag.NArg() != 1 {
 		flag.Usage()
 	}

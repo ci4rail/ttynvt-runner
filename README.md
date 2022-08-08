@@ -6,5 +6,14 @@ For more information about ttynvt see https://gitlab.com/ci4rail/ttynvt.
 
 # Usage
 ```
-$ sudo ./ttynvt-runner <ttynvt-program-path> [-m <major-number>]
+$ sudo ./ttynvt-runner [-m <major-number>] <ttynvt-program-path>
+```
+
+# Build
+
+Example: Build for arm64:
+
+```bash
+cd cmd/ttynvt-runner
+GOOS=linux GOARCH=arm64 go build -o ../bin/ttynvt-runner .
 ```
