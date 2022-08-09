@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/ci4rail/io4edge-client-go v1.3.0
-	github.com/ci4rail/socketcan-io4edge v0.1.0
+	github.com/ci4rail/socketcan-io4edge v0.1.1
 	github.com/sirupsen/logrus v1.8.1
 )
 
